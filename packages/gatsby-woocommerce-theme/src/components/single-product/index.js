@@ -5,18 +5,18 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { isEmpty } from "lodash";
 import SocialShareCard from "../social-share-card";
 import ProductCarousel from "../product-carousel";
-import { sanitize } from "../../utils/functions";
+import { getImgSrcs, sanitize } from "../../utils/functions";
+import { graphql } from "gatsby";
 
 const productImagePlaceholder = "https://via.placeholder.com/434";
 
 const SingleProduct = ( props ) => {
 	const { product } = props;
 
-	const hasImagesSizes =
-		      !isEmpty( product.image ) && !isEmpty( product.image.mediaDetails.sizes );
-	const imgSrcUrl      = hasImagesSizes
-		? product.image.sourceUrl
-		: "";
+	// const hasImagesSizes = !isEmpty( product.image ) && !isEmpty( product.image.mediaDetails.sizes );
+	// const imgSrcUrl = hasImagesSizes ? product.image.sourceUrl : "";
+
+	const srcS = getImgSrcs(product.image);
 
 	const displayProductImages = () => {
 		if ( !isEmpty( product.galleryImages.nodes ) ) {
@@ -26,7 +26,8 @@ const SingleProduct = ( props ) => {
 				<figure>
 					<LazyLoadImage
 						alt={ product.image.altText ? product.image.altText : "" }
-						src={ imgSrcUrl } // use normal <img> attributes as props
+						src={ srcS.src } // use normal <img> attributes as props
+						srcSet={ srcS.srcSet } // use normal <img> attributes as props
 						effect="blur"
 					/>
 				</figure>

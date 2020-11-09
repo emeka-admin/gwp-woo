@@ -15,7 +15,7 @@ query GET_FRONT_PAGE {
 	  ...SeoFragment
 	}
   }
-  categories: allWpProductCategory(limit: 5) {
+  categories: allWpProductCategory(limit: 10) {
     nodes {
       id
       name

@@ -13,6 +13,16 @@ fragment ProductsFragment on WpProduct {
             title
             altText
             mediaItemUrl
+            srcSet
+            remoteFile {
+              extension
+              childImageSharp {
+                fluid {
+                  srcWebp
+                  srcSetWebp
+                }
+              }
+            }
           }
         }
         image {

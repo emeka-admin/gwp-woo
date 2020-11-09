@@ -4,6 +4,7 @@ fragment ImageFragment on WpMediaItem {
 	  altText
 	  caption
 	  sourceUrl
+      srcSet
 	  mediaDetails {
 	    sizes {
 	      height
@@ -11,6 +12,15 @@ fragment ImageFragment on WpMediaItem {
 	      name
 	      sourceUrl
 	    }
+	  }
+	  remoteFile {
+        extension
+		childImageSharp {
+		  fluid {
+			srcWebp
+			srcSetWebp
+		  }
+		}
 	  }
 }
 `;

@@ -586,3 +586,38 @@ export const sanitize = (content) => {
 	return process.browser ? DOMPurify.sanitize(content) : content
 }
 
+/**
+ * 
+ * @param {object} image Full content image provided by graphql query
+ * 
+ * @return {object} src and srcSet
+ */
+export const getImgSrcs = ( img ) => {
+  
+	const wasSharped = ( img ) => {
+		return !['svg, webp'].indexOf(img.remoteFile.extension) > -1;
+	}
+
+	const getImgSrc = ( img ) => {
+		return (wasSharped(img) ? img.remoteFile.childImageSharp.fluid.srcWebp : img.sourceUrl || img.mediaItemUrl);
+	}
+	const getImgSrcSet = ( img ) => {
+		return (wasSharped(img) ? img.remoteFile.childImageSharp.fluid.srcSetWebp : img.srcSet || img.mediaItemUrl);
+  }
+  
+  return {
+    'src': getImgSrc(img),
+    'srcSet': getImgSrcSet(img)
+  };
+}
+
+/**
+ * 
+ * @param {object} image Full content image provided by graphql query
+ * 
+ * @return {object} src and srcSet
+ */
+export const getImgArraySrcs = ( imgs ) => {
+  
+  return imgs.map(img => getImgSrcs(img));
+}

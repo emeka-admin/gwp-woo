@@ -5,6 +5,7 @@ import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
 import { isEmpty } from "lodash";
+import { getImgSrcs } from "../../utils/functions";
 
 const ProductCarousel = ( { galleryImages } ) => {
 
@@ -38,7 +39,8 @@ const ProductCarousel = ( { galleryImages } ) => {
 								{ !isEmpty( galleryImage.mediaItemUrl ) ? (
 									<Zoom>
 										<img
-											src={ galleryImage.mediaItemUrl }
+											src={ getImgSrcs(galleryImage).src }
+											srcSet={ getImgSrcs(galleryImage).srcSet }
 											alt={
 												!isEmpty( galleryImage.altText )
 													? galleryImage.altText

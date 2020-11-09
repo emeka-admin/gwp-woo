@@ -28,7 +28,7 @@ query GET_PAGES {
       }
     }
   }
-  categories: allWpProductCategory(limit: 5) {
+  categories: allWpProductCategory(limit: 10) {
     nodes {
       id
       name
