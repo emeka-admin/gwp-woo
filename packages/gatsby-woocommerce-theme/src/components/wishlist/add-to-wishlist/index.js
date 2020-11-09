@@ -30,7 +30,7 @@ const AddToWishList = ( { product } ) => {
 					altText: !isEmpty( product.image.altText ) ? product.image.altText : '',
 					sourceUrl: !isEmpty( product.image.sourceUrl ) ? product.image.sourceUrl : '',
 				},
-				link: product.link,
+				link: 'produit/' + product.slug,
 				name: product.name,
 				price: product.price,
 				type: product.type ? product.type : product.nodeType

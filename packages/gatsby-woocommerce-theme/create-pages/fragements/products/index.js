@@ -6,6 +6,7 @@ fragment ProductsFragment on WpProduct {
         productId
         nodeType
         link
+        slug
         description
         galleryImages {
           nodes {
@@ -26,8 +27,8 @@ fragment ProductsFragment on WpProduct {
           }
         }
         image {
-		  ...ImageFragment
-		}
+          ...ImageFragment
+        }
         productCategories {
           nodes {
             id

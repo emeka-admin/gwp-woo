@@ -28,7 +28,7 @@ const Product = (props) => {
     // @TODO Need to handle Group products differently.
     !isEmpty(product) && "GroupProduct" !== product.nodeType ? (
       <div className="col-lg-4 col-md-6 mb-5">
-        <Link to={product.link} className="product-image">
+        <Link to={'produit/' + product.slug} className="product-image">
           {!isEmpty(product.image) ? (
 			<figure>
 				<LazyLoadImage
