@@ -1,7 +1,7 @@
 import Link from "gatsby-link";
 import React, { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
-import { getFormattedCart, getUpdatedItems } from "../../../utils/functions";
+import { getFormattedCart, getLocalPrice, getUpdatedItems } from "../../../utils/functions";
 import CartItem from "../cart-item";
 import { v4 } from "uuid";
 import { useMutation, useQuery } from "@apollo/client";
@@ -10,7 +10,7 @@ import GET_CART from "../../../queries/get-cart";
 import CLEAR_CART_MUTATION from "../../../mutations/clear-cart";
 
 const CartItemsContainer = () => {
-  const [cart, setCart] = useContext(AppContext);
+  const {cart, setCart, country} = useContext(AppContext);
   const [requestError, setRequestError] = useState(null);
 
   // Get Cart Data.
@@ -153,17 +153,20 @@ const CartItemsContainer = () => {
                   <tr className="table-light">
                     <td className="woo-next-cart-element-total">Subtotal</td>
                     <td className="woo-next-cart-element-amt">
-                      {"string" !== typeof cart.totalProductsPrice
+                      {/* {"string" !== typeof cart.totalProductsPrice
                         ? cart.totalProductsPrice.toFixed(2)
-                        : cart.totalProductsPrice}
+                        : cart.totalProductsPrice
+                      } */}
+                      {!country ? cart.totalProductsPrice : getLocalPrice(country, cart.totalProductsPrice)}
                     </td>
                   </tr>
                   <tr className="table-light">
                     <td className="woo-next-cart-element-total">Total</td>
                     <td className="woo-next-cart-element-amt">
-                      {"string" !== typeof cart.totalProductsPrice
+                      {/* {"string" !== typeof cart.totalProductsPrice
                         ? cart.totalProductsPrice.toFixed(2)
-                        : cart.totalProductsPrice}
+                      : cart.totalProductsPrice} */}
+                      {!country ? cart.totalProductsPrice : getLocalPrice(country, cart.totalProductsPrice)}
                     </td>
                   </tr>
                 </tbody>

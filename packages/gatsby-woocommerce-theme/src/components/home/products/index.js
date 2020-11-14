@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
 import Pagination from "react-js-pagination";
+import { AppContext } from "../../context/AppContext";
 
 import Product from "../../product";
 import "./style.scss";
@@ -10,6 +12,8 @@ const Products = (props) => {
   const [currentProducts, setCurrentProducts] = useState(null);
   const productsPerPage = 6;
   const pageRange = 10;
+
+  const {country} = useContext(AppContext);
 
   /**
    * Whenever the products length changes,
@@ -63,9 +67,9 @@ const Products = (props) => {
   return (
     <div className="container">
       <div className="product-container row">
-        {currentProducts.map((product) => (
+        {country && currentProducts.map((product) => {console.log(product);return(
           <Product key={product.id} product={product} />
-        ))}
+        )})}
       </div>
       <Pagination
         activePage={activePage}

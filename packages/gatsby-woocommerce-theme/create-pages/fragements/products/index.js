@@ -26,6 +26,27 @@ fragment ProductsFragment on WpProduct {
             }
           }
         }
+        contenuMenuProduit {
+          topProduitDescription {
+            headerMenu
+            headerUrls
+            footerMenu
+            footerUrls
+            fieldGroupName
+            couleurTexteDuMenu
+            couleurBackgroundMenuFooter
+            imageMenu {
+              remoteFile {
+                childImageSharp {
+                  fluid {
+                    srcWebp
+                    srcSetWebp
+                  }
+                }
+              }
+            }
+          }
+        }
         image {
           ...ImageFragment
         }
@@ -44,6 +65,15 @@ fragment ProductsFragment on WpProduct {
           id
           name
           price
+          variations {
+            nodes {
+              regularPrice
+              salePrice
+              name
+              variationId
+              sku
+            }
+          }
         }
         ... on WpExternalProduct {
           id

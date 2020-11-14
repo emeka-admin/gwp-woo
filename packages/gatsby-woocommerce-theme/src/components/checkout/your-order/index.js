@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { getLocalPrice } from '../../../utils/functions';
+import { AppContext } from '../../context/AppContext';
 import CheckoutCartItem from "../checkout-cart-item";
 
 const Index = ( { cart } ) => {
+
+	const {country} = useContext(AppContext);
 
 	return (
 		<>
@@ -27,12 +31,12 @@ const Index = ( { cart } ) => {
 						<tr className="">
 							<td className=""/>
 							<td className="woo-next-checkout-total">Subtotal</td>
-							<td className="woo-next-checkout-total">{ cart.totalProductsPrice }</td>
+							<td className="woo-next-checkout-total">{ !country ? cart.totalProductsPrice : getLocalPrice(country, cart.totalProductsPrice) }</td>
 						</tr>
 						<tr className="">
 							<td className=""/>
 							<td className="woo-next-checkout-total">Total</td>
-							<td className="woo-next-checkout-total">{ cart.totalProductsPrice }</td>
+							<td className="woo-next-checkout-total">{ !country ? cart.totalProductsPrice : getLocalPrice(country, cart.totalProductsPrice) }</td>
 						</tr>
 						</tbody>
 					</table>

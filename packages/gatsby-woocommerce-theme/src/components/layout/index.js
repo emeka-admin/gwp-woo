@@ -12,12 +12,18 @@ import './../../sass/common.scss';
 import Header from "../header";
 import Footer from "../footer";
 
-const Layout = ( { children }) => {
+const Layout = ( { children, products = [], his = false }) => {
+
+  // TODO set default menu properties
+  var pageMenu = products.map((product) => {
+    return product.contenuMenuProduit;
+  }).filter(elem => elem)[0] || {};
+
   return (
     <>
-      <Header/>
+      <Header pageMenu={pageMenu} his={his}/>
 	    <main className="main-container">{children}</main>
-	  <Footer/>
+	    <Footer pageMenu={pageMenu} his={his}/>
     </>
   )
 }
@@ -25,5 +31,9 @@ const Layout = ( { children }) => {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+Layout.defaultProps = {
+  products: []
+}
 
 export default Layout

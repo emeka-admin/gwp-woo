@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "gatsby-link";
 import AddToCartButton from "../cart/add-to-cart-button";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -6,11 +6,15 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { isEmpty } from "lodash";
 import "./style.scss";
 import AddToWishList from "../wishlist/add-to-wishlist";
+import { getLocalPrice } from "../../utils/functions";
+import { AppContext } from "../context/AppContext";
 
 const productImagePlaceholder = "https://via.placeholder.com/434";
 
 const Product = (props) => {
   const { product } = props;
+	
+	const {country} = useContext(AppContext);
 
   const hasImagesSizes =
     !isEmpty(product.image) && !isEmpty(product.image.mediaDetails.sizes);
@@ -53,7 +57,7 @@ const Product = (props) => {
         </Link>
         <div className="card-body text-center">
           <h3 className="card-header">{product.name ? product.name : ""}</h3>
-          <h6 className="card-subtitle">{product.price}</h6>
+          <h6 className="card-subtitle">{!country ? product.price : getLocalPrice(country, product.price)}</h6>
           <AddToCartButton product={product} />
           <AddToWishList product={ product } />
         </div>

@@ -5,10 +5,10 @@
 	"main": "gatsby-config.js",
 	"scripts": {
 		"build": "gatsby build",
-	  	"build:clean": "npm run clean && npm run build",
+		"build:clean": "npm run clean && npm run build",
 		"dev": "gatsby develop",
-	  	"dev:clean": "npm run clean && npm run dev",
-	  	"clean": "gatsby clean",
+		"dev:clean": "npm run clean && npm run dev",
+		"clean": "gatsby clean",
 		"format": "prettier --write \"**/*.{js,jsx,json,md}\"",
 		"start": "npm run dev",
 		"serve": "npm run clean && gatsby serve",

@@ -4,10 +4,11 @@ import { AppContext } from "../../context/AppContext";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { isEmpty } from "lodash";
 import Link from "gatsby-link";
+import { getLocalPrice } from '../../../utils/functions';
 
 const CartDropDown = ({ isDropdownOpen }) => {
 
-	const [ cart ] = useContext( AppContext );
+	const {cart, country} = useContext( AppContext );
 
 	if ( null === cart || ! Object.keys( cart ).length ) {
 		return null;
@@ -30,7 +31,7 @@ const CartDropDown = ({ isDropdownOpen }) => {
 				</div>
 				<div className="shopping-cart-total">
 					<span className="lighter-text">Total:</span>
-					<span className="main-color-text">{ totalPrice }</span>
+					<span className="main-color-text">{ !country ? totalPrice : getLocalPrice(country, totalPrice) }</span>
 				</div>
 			</div>
 			<ul className="shopping-cart-items">
@@ -58,7 +59,7 @@ const CartDropDown = ({ isDropdownOpen }) => {
 							</figure>
 						) : null}
 						<span className="item-name">{ product.name }</span>
-						<span className="item-price">{ product.totalPrice }</span>
+						<span className="item-price">{ !country ? product.totalPrice : getLocalPrice(country, product.totalPrice) }</span>
 						<span className="item-quantity">Quantity: { product.qty }</span>
 					</li>
 				) ) }

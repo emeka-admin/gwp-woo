@@ -10,8 +10,10 @@ import OrderSuccess from "../order-success";
 import GET_CART from "../../../queries/get-cart";
 import CHECKOUT_MUTATION from "../../../mutations/checkout";
 import CheckoutError from "../checkout-error";
+import { StripePurchase } from "../stripe";
 
 const CheckoutForm = () => {
+
   const initialState = {
   	firstName: '',
   	lastName: '',
@@ -53,10 +55,12 @@ const CheckoutForm = () => {
   //   errors: null,
   // };
 
-  const [cart, setCart] = useContext(AppContext);
+  const {cart, setCart} = useContext(AppContext);
   const [input, setInput] = useState(initialState);
   const [orderData, setOrderData] = useState(null);
   const [requestError, setRequestError] = useState(null);
+
+  console.log(cart);
 
   // Get Cart Data.
   const { data, refetch } = useQuery(GET_CART, {
@@ -173,6 +177,8 @@ const CheckoutForm = () => {
       ) : (
         ""
       )}
+			{/*Pay with Stripe*/}
+			<StripePurchase/>
 
       {/*Show message if Order Success*/}
       <OrderSuccess response={checkoutResponse} />

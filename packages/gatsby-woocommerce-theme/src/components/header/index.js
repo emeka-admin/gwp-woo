@@ -9,6 +9,7 @@ import { StaticQuery, graphql } from 'gatsby';
  * Internal dependencies.
  */
 import { Header } from "./header-static";
+import { Header2 } from "./header2";
 
 /**
  * Default Header Component Export.
@@ -52,7 +53,7 @@ export default ( props ) => {
 				` }
 			render={ data => (
 				<>
-					<Header data={ data }/>
+					{props.his ? <Header data={ data } pageMenu={props.pageMenu} /> : <Header2 data={ data } pageMenu={props.pageMenu} />}
 				</>
 			) }
 		/>

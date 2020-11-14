@@ -25,13 +25,13 @@ query GET_ARCHIVES {
       }
     }
   }
-  products: allWpProduct(limit: 100) {
+  products: allWpProduct(filter: {productId: {eq: ${process.env.PRODUCT_ID}}}, limit: 100) {
     edges {
       node {
-      ...ProductsFragment
-      seo {
-        ...SeoFragment
-      }
+		...ProductsFragment
+		seo {
+			...SeoFragment
+		}
       }
     }
   }

@@ -1,0 +1,266 @@
+@import "../../sass/essentials";
+
+footer {
+
+    .args-part {
+        padding: 25px 0 15px;
+
+        .arg {
+            display: inline-block;
+            width: calc(25% - 70px);
+            margin: 0 35px;
+            vertical-align: top;
+
+            @media (max-width: 1280px) {
+                width: calc(50% - 70px);
+            }
+
+            @media (max-width: $tablet) {
+                width: 100%;
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            div.icon {
+                margin: 0.5em 18px 0 0;
+                width: 30px;
+                height: 30px;
+                display: inline-block;
+                vertical-align: top;
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: center, center;
+
+                @media (max-width: $tablet) {
+                    display: block;
+                    margin: 5px auto;
+                    text-align: center;
+                }
+            }
+
+            .text {
+                display: inline-block;
+                vertical-align: top;
+                width: calc(100% - 48px);
+
+                .title {
+                    margin-bottom: 4px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    line-height: 26px;
+
+                }
+
+                .text_content {
+                    margin-bottom: 4px;
+                    font-size: 14px;
+                    line-height: 22px;
+                }
+
+                @media (max-width: $tablet) {
+                    width: max-content;
+                }
+            }
+        }
+    }
+
+    hr.top {
+        height: 1px;
+        border-radius: 2px;
+        width: 100%;
+        left: 0;
+        filter: brightness(0.8);
+        transition: height 0.3s ease-in-out, left 0.3s ease-in-out, width 0.3s ease-in-out;
+
+        @media (max-width: $tablet) {
+            height: 2px;
+            width: 100vw;
+            left: calc((100% - 100vw) / 2);
+            position: relative;
+            transition: height 0.3s ease-in-out, left 0.3s ease-in-out, width 0.3s ease-in-out;
+        }
+    }
+
+    .middle-part {
+        padding: 15px 0;
+
+        .menus {
+            display: inline-block;
+            vertical-align: top;
+
+            @media (max-width: 349px) {
+                text-align: center;
+            }
+
+            .title {
+                width: 50%;
+                margin-bottom: 5px;
+                text-transform: uppercase;
+                font-size: 16px;
+                line-height: 20px;
+                font-weight: 500;
+                transition: width 0.3s ease-in-out;
+
+                @media (max-width: 349px) {
+                    width: max-content;
+                    transition: width 0.3s ease-in-out;
+                    margin: 0 auto 5px;
+                    padding-bottom: 1px;
+                    border-bottom: 1px solid #222;
+                    font-weight: 700;
+                }
+
+            }
+
+            a.footer-elem {
+                display: inline-block;
+                width: 50%;
+                margin-bottom: 5px;
+                text-transform: capitalize;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 22px;
+
+                @media (max-width: 349px) {
+                    width: 100%;
+                    transition: width 0.3s ease-in-out;
+                }
+
+            }
+
+            a.footer-elem::before {
+                
+            }
+
+            @media (max-width: $tablet) {
+                margin-bottom: 30px;
+            }
+        }
+
+        .newsletter {
+            text-align: left;
+            display: inline-block;
+            vertical-align: top;
+
+            .title {
+                font-weight: 700;
+                font-size: 14px;
+                opacity: 0.8;
+                text-transform: uppercase;
+                margin-bottom: 7px;
+                line-height: 20px;
+
+            }
+
+            input.field {
+                padding: 10px 12px;
+                border-radius: 2px;
+                height: 48px;
+                width: 100%;
+                line-height: 1;
+                border: 1px solid #868686;
+                outline: transparent;
+                border-radius: 2px;
+
+            }
+
+            input.field:focus,
+            input.field:focus-within,
+            input.field:active {
+                border: 2px solid #222;
+                padding: 9px 12px 9px 11px;
+            }
+
+            button.send {
+
+                font-size: 14px!important;
+                padding: 15px 30px 14px 30px;
+                display: inline-block;
+                margin: 10px 0 25px 0;
+                font-size: 14px;
+                color: #fff;
+                cursor: pointer;
+                font-weight: 700;
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+                text-align: center;
+                box-sizing: border-box;
+                border: none;
+                box-shadow: 4px 8px 22px -2px rgba(0,0,0,0.64);
+                filter: saturate(2);
+                opacity: 1;
+                transition: opacity 0.2s ease-in;
+            }
+
+            button.send:hover,
+            button.send:active {
+                opacity: 0.8;
+                transition: opacity 0.2s ease-in-out;
+
+            }
+        }
+    }
+
+    .bottom-part {
+        padding: 15px 0 10px;
+            
+        @media (max-width: 767px) {
+            padding: 15px 10px 10px;
+            text-align: center;
+        }
+
+        .payments {
+            width: 50%;
+
+            .payment {
+                margin: 0 5px;
+                width: 38px;
+                height: 24px;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+    
+                &:last-child {
+                    margin-right: 0;
+                }
+            
+                @media (max-width: 767px) {
+                    margin-bottom: 5px;
+                }
+            }
+            
+            @media (max-width: 767px) {
+                width: max-content;
+                margin: 0 auto;
+            }
+        }
+
+        hr.bottom {
+            display: none;
+            
+            @media (max-width: 767px) {
+                display: block;
+                width: 60%;
+                margin: 15px auto 10px;
+            }
+        }
+
+        .credentials {
+            width: 50%;
+            text-align: right;
+            font-size: 16px;
+
+            a.agency {
+                font-weight: 700;
+                font-size: 16px;
+            }
+            
+            @media (max-width: 767px) {
+                width: max-content;
+                margin: 0 auto;
+                text-align: center;
+            }
+        }
+    }
+}

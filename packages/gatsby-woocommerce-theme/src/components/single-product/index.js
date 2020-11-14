@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import AddToCartButton from "../cart/add-to-cart-button";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { isEmpty } from "lodash";
 import SocialShareCard from "../social-share-card";
 import ProductCarousel from "../product-carousel";
-import { getImgSrcs, sanitize } from "../../utils/functions";
-import { graphql } from "gatsby";
+import { getImgSrcs, getLocalPrice, sanitize } from "../../utils/functions";
+import { AppContext } from "../context/AppContext";
 
 const productImagePlaceholder = "https://via.placeholder.com/434";
 
 const SingleProduct = ( props ) => {
 	const { product } = props;
+	
+	const {country} = useContext(AppContext);
 
 	// const hasImagesSizes = !isEmpty( product.image ) && !isEmpty( product.image.mediaDetails.sizes );
 	// const imgSrcUrl = hasImagesSizes ? product.image.sourceUrl : "";
@@ -66,7 +68,7 @@ const SingleProduct = ( props ) => {
 								<p dangerouslySetInnerHTML={ { __html: sanitize( product.description ) } }/>
 							) : null }
 							<div className="single-product-add-to-cart">
-								<h6 className="card-subtitle mb-3">{ product.price }</h6>
+								<h6 className="card-subtitle mb-3">{ !country ? product.price : getLocalPrice(country, product.price) }</h6>
 								<AddToCartButton product={ product }/>
 							</div>
 							<SocialShareCard title={ product.name } sectionTitle="Share this product"

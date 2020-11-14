@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { v4 } from "uuid";
-import { getUpdatedItems } from "../../../utils/functions";
+import { getLocalPrice, getUpdatedItems } from "../../../utils/functions";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import cartSpinnerGif from '../../../images/cart-spinner.gif';
 import './style.scss';
 import isEmpty from "validator/es/lib/isEmpty";
+import { AppContext } from '../../context/AppContext';
 
 const CartItem = ( {
 	                   item,
@@ -15,6 +16,9 @@ const CartItem = ( {
                    } ) => {
 
 	const [productCount, setProductCount] = useState( item.qty );
+
+	/* eslint-disable */
+	const {country} = useContext(AppContext);
 
 	/*
 	 * When user changes the qty from product input update the cart in localStorage
@@ -99,8 +103,10 @@ const CartItem = ( {
 							<img className="woo-next-cart-item-spinner" src={ cartSpinnerGif } alt="spinner"/> : '' }
 					</div>
 					<div className="">
-						<span className="cart-product-price">{ ( 'string' !== typeof item.price ) ? item.price.toFixed( 2 ) : item.price }</span>
-						<span className="cart-total-price"> {( 'string' !== typeof item.totalPrice ) ? item.totalPrice.toFixed( 2 ) : item.totalPrice }</span>
+						{/* <span className="cart-product-price">{ ( 'string' !== typeof item.price ) ? item.price.toFixed( 2 ) : item.price }</span> */}
+						<span className="cart-product-price">{ !country ? item.price : getLocalPrice(country, item.price) }</span>
+						{/* <span className="cart-total-price"> {( 'string' !== typeof item.totalPrice ) ? item.totalPrice.toFixed( 2 ) : item.totalPrice }</span> */}
+						<span className="cart-total-price"> { !country ? item.totalPrice : getLocalPrice(country, item.totalPrice) }</span>
 					</div>
 				</footer>
 			</div>

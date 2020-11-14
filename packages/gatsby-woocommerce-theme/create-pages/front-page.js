@@ -26,13 +26,13 @@ query GET_FRONT_PAGE {
       }
     }
   }
-  products: allWpProduct(limit: 1000) {
+  products: allWpProduct(filter: {productId: {eq: ${process.env.PRODUCT_ID}}}, limit: 100) {
     edges {
       node {
-      ...ProductsFragment
-      seo {
-        ...SeoFragment
-      }
+		...ProductsFragment
+		seo {
+			...SeoFragment
+		}
       }
     }
   }

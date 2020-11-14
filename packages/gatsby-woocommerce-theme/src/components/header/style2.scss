@@ -1,0 +1,79 @@
+@import "../../sass/essentials";
+
+header {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100px;
+
+    @media (max-width: 1199px) {
+
+    }
+
+    .site-header-container {
+        padding: 15px;
+
+        .site-header {
+
+
+            .site-brand {
+
+
+                a {
+
+
+                    figure {
+
+
+                        img.site-brand__logo {
+                            max-width: 180px;
+                            width: 100%;
+                        }
+                    }
+                }
+                .site-brand__content {
+
+
+                    .screen-reader-text.site-brand__title {
+
+
+                    }
+                    .site-brand__description {
+
+
+                    }
+                }
+            }
+
+            nav {
+
+                .nav-elem {
+                    display: inline-block;
+                    text-transform: capitalize;
+                    margin: 0 15px;
+                    cursor: pointer;
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+
+                }
+
+                .nav-elem.checkout {
+                    font-weight: bold;
+                    font-size: 20px;
+                    border: 1px solid black;
+                    padding: 6.5px 14px;
+                    border-radius: 17px;
+                    line-height: 1;
+                }
+            }
+        }
+
+    }
+}

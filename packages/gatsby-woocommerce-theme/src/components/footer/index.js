@@ -9,13 +9,14 @@ import { graphql, StaticQuery } from "gatsby";
  */
 import './style.scss';
 import { Footer } from "./footer-static";
+import { Footer2 } from "./footer2";
 
 /**
  * This is default Component Export.
  *
  * @return {*}
  */
-export default () => {
+export default (props) => {
 
 	return (
 		<StaticQuery
@@ -45,7 +46,11 @@ export default () => {
 						  }
 				    }
 				` }
-			render={ data => <Footer data={ data }/> }
+			render={ data => 
+				<>
+					{props.his ? <Footer data={ data } pageMenu={props.pageMenu}/> : <Footer2 data={ data } pageMenu={props.pageMenu}/>}
+				</>
+			}
 		/>
 	)
 }

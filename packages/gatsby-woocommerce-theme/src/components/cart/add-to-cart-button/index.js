@@ -13,11 +13,11 @@ const AddToCart = (props) => {
 
   const productQtyInput = {
     clientMutationId: v4(), // Generate a unique id.
-    productId: product.productId,
+    productId: product.productId || product.variationId,
   };
 
   /* eslint-disable */
-  const [cart, setCart] = useContext(AppContext);
+  const {cart, setCart} = useContext(AppContext);
   const [showViewCart, setShowViewCart] = useState(false);
   const [requestError, setRequestError] = useState(null);
 
@@ -47,24 +47,31 @@ const AddToCart = (props) => {
     onCompleted: () => {
       // If error.
       if (addToCartError) {
+        console.log(addToCartError);
         setRequestError(addToCartError.graphQLErrors[0].message);
       }
 
       // On Success:
       // 1. Make the GET_CART query to update the cart with new values in React context.
       refetch();
+      document.getElementById('add-to-cart').innerHTML = "Checkout...";
 
       // 2. Show View Cart Button
-      setShowViewCart(true);
+      // setShowViewCart(true);
+      window.location.href = "/checkout";
+
     },
     onError: (error) => {
       if (error) {
+        document.getElementById('add-to-cart').innerHTML = "Erreur";
+        console.log(error);
         setRequestError(error.graphQLErrors[0].message);
       }
     },
   });
 
   const handleAddToCartClick = () => {
+    document.getElementById('add-to-cart').innerHTML = "Adding to Cart...";
     setRequestError(null);
     addToCart();
   };
@@ -77,7 +84,7 @@ const AddToCart = (props) => {
           <button className="btn btn-outline-dark">Buy Now</button>
         </a>
       ) : (
-        <button onClick={handleAddToCartClick} className="btn btn-outline-dark">
+        <button id="add-to-cart" onClick={handleAddToCartClick} className="btn btn-outline-dark">
           Add to cart
         </button>
       )}

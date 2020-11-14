@@ -621,3 +621,21 @@ export const getImgArraySrcs = ( imgs ) => {
   
   return imgs.map(img => getImgSrcs(img));
 }
+
+/**
+ * 
+ * @param {string, int, double} price Price
+ * 
+ * @return {string} Locally stringified price
+ */
+export const getLocalPrice = (country, price) => {
+  if(!country) {
+    return price;
+  }
+  if(typeof price === 'string') {
+    return new Intl.NumberFormat(navigator.language, { style: 'currency', currency: country.currency }).format(parseFloat(price.replace(/[^0-9,.]/g, '')));
+  }
+  if(typeof price === 'number') {
+    return new Intl.NumberFormat(navigator.language, { style: 'currency', currency: country.currency }).format(price);
+  }
+}
