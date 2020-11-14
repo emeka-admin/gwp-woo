@@ -11,7 +11,7 @@ exports.createPages = async ( { actions, graphql } ) => {
 };
 
 exports.onCreatePage = async ({ page, actions: { deletePage } }) => {
-    if (page.path.match(/\/(.*?)((.html\/)|(.html)|\/)/g)) {
+    if (page.path.match(/\/((?!checkout).*?)((.html\/)|(.html)|\/)/g)) {
       deletePage(page)
     }
 }
