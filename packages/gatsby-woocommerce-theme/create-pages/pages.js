@@ -66,21 +66,21 @@ module.exports = async ( { actions, graphql } ) => {
 			// If its not a custom template, create the page.
 			if ( ! customTemplatesUris.includes( page.uri ) &&! customTemplateSlugs.includes( page.slug )  ) {
 
-				createPage( {
-					path: `${ page.uri }`,
-					component: slash( singlePageTemplate ),
-					context: { ...page, categoriesData }, // pass single page data in context, so its available in the singlePageTemplate in props.pageContext.
-				} );
+				// createPage( {
+				// 	path: `${ page.uri }`,
+				// 	component: slash( singlePageTemplate ),
+				// 	context: { ...page, categoriesData }, // pass single page data in context, so its available in the singlePageTemplate in props.pageContext.
+				// } );
 
 			}
 
 			// Load custom template for my-account
 			if ( 'my-account' === page.slug ) {
-				createPage( {
-					path: `/my-account`,
-					component: slash( myAccountPageTemplate ),
-					context: { ...page },
-				} );
+				// createPage( {
+				// 	path: `/my-account`,
+				// 	component: slash( myAccountPageTemplate ),
+				// 	context: { ...page },
+				// } );
 			}
 
 		} );

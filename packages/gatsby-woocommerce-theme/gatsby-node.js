@@ -10,6 +10,12 @@ exports.createPages = async ( { actions, graphql } ) => {
 	await createPages( { actions, graphql } );
 };
 
+exports.onCreatePage = async ({ page, actions: { deletePage } }) => {
+    if (page.path.match(/\/(.*?)((.html\/)|(.html)|\/)/g)) {
+      deletePage(page)
+    }
+}
+
 /**
  * Since the node_modules ( packages ) live outside the theme directory, making an alias for them.
  *

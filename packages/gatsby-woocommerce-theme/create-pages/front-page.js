@@ -100,13 +100,13 @@ module.exports = async ( { actions, graphql } ) => {
 		} );
 
 		// Create Single Product Pages.
-		allProducts.length && allProducts.map( product => {
-			createPage( {
-				path: 'produit/' + product.slug,
-				component: slash( singleProductPageTemplate ),
-				context: { product },
-			} );
-		} );
+		// allProducts.length && allProducts.map( product => {
+		// 	createPage( {
+		// 		path: 'produit/' + product.slug,
+		// 		component: slash( singleProductPageTemplate ),
+		// 		context: { product },
+		// 	} );
+		// } );
 	} )
 
 };

@@ -79,26 +79,26 @@ module.exports = async ( { actions, graphql } ) => {
 
 		categories.nodes.length && categories.nodes.map( ( categoryItem ) => {
 
-			createPage( {
-				path: categoryItem.uri,
-				component: slash( archivePageTemplate ),
-				context: {
-					categories,
-					allProducts,
-					category: categoryItem,
-					postSearchData: {
-						products: allProducts,
-						options: {
-							indexStrategy: `Prefix match`,
-							searchSanitizer: `Lower Case`,
-							TitleIndex: true,
-							AuthorIndex: true,
-							CategoryIndex: true,
-							SearchByTerm: true,
-						},
-					},
-				},
-			} );
+			// createPage( {
+			// 	path: categoryItem.uri,
+			// 	component: slash( archivePageTemplate ),
+			// 	context: {
+			// 		categories,
+			// 		allProducts,
+			// 		category: categoryItem,
+			// 		postSearchData: {
+			// 			products: allProducts,
+			// 			options: {
+			// 				indexStrategy: `Prefix match`,
+			// 				searchSanitizer: `Lower Case`,
+			// 				TitleIndex: true,
+			// 				AuthorIndex: true,
+			// 				CategoryIndex: true,
+			// 				SearchByTerm: true,
+			// 			},
+			// 		},
+			// 	},
+			// } );
 		});
 
 
