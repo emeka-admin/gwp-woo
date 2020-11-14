@@ -36,5 +36,8 @@
     "url": "https://github.com/imranhsayed/gatsby-woocommerce-themes/issues"
   },
   "homepage": "https://github.com/imranhsayed/gatsby-woocommerce-themes#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^4.3.0"
+  }
 }
