@@ -15,50 +15,26 @@ export const AppProvider = (props) => {
     }
   }, []);
 
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const [items, setItems] = React.useState(null);
   const [error, setError] = React.useState(null);
 
   useEffect(() => {
-    fetch("https://api.example.com/items")
+    if(window.fetch) {
+      fetch("http://ip-api.com/json/?fields=country,city,timezone,currency")
       .then(res => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
-          setItems(result.items);
-          console.log(items);
+          setCountry(result);
         },
         // Remarque : il faut gérer les erreurs ici plutôt que dans
         // un bloc catch() afin que nous n’avalions pas les exceptions
         // dues à de véritables bugs dans les composants.
         (error) => {
-          setIsLoaded(true);
           setError(error);
           console.log(error);
         }
-      )
+      );
+    }
   }, [])
-  
-  const getCountry = () => {
-      let req = typeof XMLHttpRequest === undefined ? null : new XMLHttpRequest();
-  
-      if(req) {
-        req.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                setCountry(JSON.parse(this.responseText));
-            }
-        }
-    
-        req.open("GET", "http://ip-api.com/json/?fields=country,city,timezone,currency", true);
-    
-        req.send();
-
-      }
-  
-      return {};
-  }
-  
-  !country && getCountry();
 
   return (
     <AppContext.Provider value={{
