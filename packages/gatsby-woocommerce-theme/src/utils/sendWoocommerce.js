@@ -2,9 +2,11 @@ import Axios from "axios";
 
 export const sendWoocommerce = async function(cartItems, cartNbItems, payment_method, payment_res, shipping, billing) {
 
+    // request 2 tokens (main et upsell) pour pouvoir payer 2 fois en ne rentrant les informations qu'une seule fois
+
     const { data: response } = await Axios({
         method: 'post',
-        url: "http://idriss-stripe.emeka.fr/ordering/",
+        url: "https://idriss-stripe.emeka.fr/ordering/",
         data: {
             articles: cartItems,
             nb_articles: cartNbItems,
