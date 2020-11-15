@@ -3,6 +3,8 @@ const archivePageTemplate = require.resolve( `../src/templates/archive/index.js`
 const { ProductsFragment } = require('./fragements/products/index.js');
 const { SeoFragment } = require('./fragements/seo/index.js');
 
+// TODO important Vérifier si tag ou id pour multi ou single
+
 // Get all the front page data.
 const GET_ARCHIVES = `
 query GET_ARCHIVES {

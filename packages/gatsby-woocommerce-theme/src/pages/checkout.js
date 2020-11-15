@@ -5,7 +5,7 @@ import { AppContext } from "../components/context/AppContext";
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC}`);
 
 const Checkout = () => {
 

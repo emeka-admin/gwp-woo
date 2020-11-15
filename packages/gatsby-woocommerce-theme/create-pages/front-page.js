@@ -4,6 +4,8 @@ const singleProductPageTemplate = require.resolve( `../src/templates/product/ind
 const { ProductsFragment } = require('./fragements/products/index.js');
 const { SeoFragment } = require('./fragements/seo/index.js');
 
+// TODO important Vérifier si tag ou id pour multi ou single
+
 // Get all the front page data.
 const GET_FRONT_PAGE = `
 query GET_FRONT_PAGE {

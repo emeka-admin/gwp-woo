@@ -237,7 +237,7 @@ const Product = ({ product }) => {
                     </div>}
                     <div className="product-form__payment-container">
                         <div className="col-md-6 col-xs-12">
-                            <AddToCart product={ product.variations.nodes[currentVariation] } />
+                            <AddToCart product={ {productId: product.productId, variationId: product.variations.nodes[currentVariation].variationId} } />
                         </div>
                         <div className="direct-purchase col-md-6 col-xs-12">
                             <span>Buy with</span>

@@ -67,7 +67,7 @@ const Products = (props) => {
   return (
     <div className="container">
       <div className="product-container row">
-        {country && currentProducts.map((product) => {console.log(product);return(
+        {country && currentProducts.map((product) => {/*/# console.log(product)*/;return(
           <Product key={product.id} product={product} />
         )})}
       </div>

@@ -13,7 +13,10 @@ const AddToCart = (props) => {
 
   const productQtyInput = {
     clientMutationId: v4(), // Generate a unique id.
-    productId: product.productId || product.variationId,
+    // TODO manage for future when base or variation
+    // productId: product.productId || product.variationId,
+    productId: product.productId,
+    variationId: product.variationId || undefined
   };
 
   /* eslint-disable */
@@ -47,7 +50,7 @@ const AddToCart = (props) => {
     onCompleted: () => {
       // If error.
       if (addToCartError) {
-        console.log(addToCartError);
+        /*/# console.log(addToCartError);*/
         setRequestError(addToCartError.graphQLErrors[0].message);
       }
 
@@ -58,13 +61,26 @@ const AddToCart = (props) => {
 
       // 2. Show View Cart Button
       // setShowViewCart(true);
+
+      // TODO 1 Laisser comme ça
+      // TODO 2 Mettre l'objet en localStorage
+      // TODO 3 Mettre le cart en localStorage avec gestion variation
+      // TODO 4 Voir Apollo si utile
+      if(product.variationId) {
+        let temp = JSON.parse(window.localStorage.getItem('variationIds')) || {};
+        if(!temp[product.productId]) {
+          temp[product.productId] = product.variationId;
+          window.localStorage.setItem('variationIds', JSON.stringify(temp));
+        }
+      }
+
       window.location.href = "/checkout";
 
     },
     onError: (error) => {
       if (error) {
         document.getElementById('add-to-cart').innerHTML = "Erreur";
-        console.log(error);
+        /*/# console.log(error);*/
         setRequestError(error.graphQLErrors[0].message);
       }
     },

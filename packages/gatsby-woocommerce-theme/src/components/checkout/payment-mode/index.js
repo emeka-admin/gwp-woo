@@ -1,8 +1,10 @@
 import React from 'react';
 import Error from "../error";
-import { StripePurchase } from '../stripe';
+import CardSection, { StripePurchase } from '../stripe';
 
-const Index = ( { input, handleOnChange } ) => {
+import './style.css';
+
+const Index = ( { input, handleOnChange, stripeUsed = false } ) => {
 
 	return (
 		<div className="mt-3">
@@ -28,13 +30,21 @@ const Index = ( { input, handleOnChange } ) => {
 					<span className="woo-next-payment-content">Check Payments</span>
 				</label>
 			</div>
-			{/*Pay with Stripe*/}
-			{/* <div className="form-check woo-next-payment-input-container mt-2">
+			{/* Cash on delivery */}
+			<div className="form-check woo-next-payment-input-container mt-2">
 				<label className="form-check-label">
 					<input onChange={ handleOnChange } value="cod" className="form-check-input" name="paymentMethod" type="radio"/>
 					<span className="woo-next-payment-content">Cash on Delivery</span>
 				</label>
-			</div> */}
+			</div>
+			{/*Pay with Stripe*/}
+			<div className="form-check woo-next-payment-input-container mt-2 stripe">
+				<label className="form-check-label">
+					<input onChange={ handleOnChange } value="stripe" className="form-check-input" name="paymentMethod" type="radio"/>
+					<span className="woo-next-payment-content">Stripe</span>
+				</label>
+				{stripeUsed && <CardSection/>}
+			</div>
 			<div className="form-check woo-next-payment-input-container mt-2">
 				<label className="form-check-label">
 					<input onChange={ handleOnChange } value="jccpaymentgatewayredirect" className="form-check-input" name="paymentMethod" type="radio"/>

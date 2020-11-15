@@ -9,7 +9,7 @@ const TestPage = ({  }) => {
 
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+                /*/#console.log(this.responseText);*/
                 setCountry(JSON.parse(this.responseText));
                 // document.getElementById('country').innerHTML = `country : ${this.responseText.country}`;
                 // document.getElementById('city').innerHTML = `city : ${this.responseText.city}`;

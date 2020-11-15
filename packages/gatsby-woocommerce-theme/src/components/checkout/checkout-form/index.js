@@ -5,14 +5,20 @@ import PaymentModes from "../payment-mode";
 import { AppContext } from "../../context/AppContext";
 import validateAndSanitizeCheckoutForm from "../../../validator/checkout";
 import { useMutation, useQuery } from "@apollo/client";
-import { getFormattedCart, createCheckoutData } from "../../../utils/functions";
+import { getFormattedCart, createCheckoutData, getLocalPrice } from "../../../utils/functions";
 import OrderSuccess from "../order-success";
 import GET_CART from "../../../queries/get-cart";
 import CHECKOUT_MUTATION from "../../../mutations/checkout";
 import CheckoutError from "../checkout-error";
-import { StripePurchase } from "../stripe";
+
+import axios from "axios";
+import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
+import { sendWoocommerce } from "../../../utils/sendWoocommerce";
 
 const CheckoutForm = () => {
+
+  const stripe = useStripe();
+  const elements = useElements();
 
   const initialState = {
   	firstName: '',
@@ -55,12 +61,14 @@ const CheckoutForm = () => {
   //   errors: null,
   // };
 
-  const {cart, setCart} = useContext(AppContext);
+  const {cart, setCart, country} = useContext(AppContext);
   const [input, setInput] = useState(initialState);
   const [orderData, setOrderData] = useState(null);
   const [requestError, setRequestError] = useState(null);
 
-  console.log(cart);
+  /*/# console.log(cart);*/
+
+  const [stripeUsed, setStripeUsed] = useState(false);
 
   // Get Cart Data.
   const { data, refetch } = useQuery(GET_CART, {
@@ -90,6 +98,8 @@ const CheckoutForm = () => {
       refetch();
     },
     onError: (error) => {
+      /*/# console.log(error);*/
+      /*/# console.log(error.graphQLErrors);*/
       if (error) {
         setRequestError(error.graphQLErrors[0].message);
       }
@@ -103,16 +113,124 @@ const CheckoutForm = () => {
    *
    * @return {void}
    */
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const result = validateAndSanitizeCheckoutForm(input);
-    if (!result.isValid) {
-      setInput({ ...input, errors: result.errors });
-      return;
+    if(!stripeUsed) {
+      const result = validateAndSanitizeCheckoutForm(input);
+      if (!result.isValid) {
+        setInput({ ...input, errors: result.errors });
+        return;
+      }
+      const checkOutData = createCheckoutData(input);
+      setOrderData(checkOutData);
+      setRequestError(null);
     }
-    const checkOutData = createCheckoutData(input);
-    setOrderData(checkOutData);
-    setRequestError(null);
+    else {
+      const result = validateAndSanitizeCheckoutForm(input);
+      if (!result.isValid) {
+        setInput({ ...input, errors: result.errors });
+        return;
+      }
+
+      if (!stripe || !elements) {
+        // Stripe.js has not yet loaded.
+        // Make sure to disable form submission until Stripe.js has loaded.
+        return;
+      }
+
+      const billingDetails = {
+        name: "Nom",
+        email: "agenceemeka@gmail.com",
+        address: {
+          city: 'marseille',
+          line1: '197 boulevard national',
+          state: 'France',
+          postal_code: '13003',
+        }
+      };
+
+      const cardElement = elements.getElement(CardElement);
+
+      try {
+
+        const { data: clientSecret } = await axios({
+          method: 'post',
+          url: "http://idriss-stripe.emeka.fr/secret/",
+          data: {
+            amount: parseFloat(cart.totalProductsPrice.replace(/[^0-9,.]/g, '')) * 100,
+            currency: country.currency
+          }
+        });
+
+        /*/# console.log(clientSecret);*/
+
+        const paymentMethodReq = await stripe.createPaymentMethod({
+          type: "card",
+          card: cardElement,
+          billing_details: billingDetails
+        });
+
+        if (paymentMethodReq.error) {
+          /*/# console.log(paymentMethodReq.error.message);*/
+          return;
+        }
+
+        const response = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: paymentMethodReq.paymentMethod.id
+        });
+
+        ///// if (result.error) {
+          // Show error to your customer (e.g., insufficient funds)
+          /////console.log(result.error.message);
+        ///// } else {
+          // The payment has been processed!
+          ///// if (result.paymentIntent.status === 'succeeded') {
+            // Show a success message to your customer
+            // There's a risk of the customer closing the window before callback
+            // execution. Set up a webhook or plugin to listen for the
+            // payment_intent.succeeded event that handles any business critical
+            // post-payment actions.
+          ///// }
+        ///// }
+        if (response.error) {
+          /*/# console.log(response.error);*/
+          return;
+        }
+        else if(response.paymentIntent.status === 'succeeded') {
+          const checkOutData = createCheckoutData(input);
+          // console.log(response);
+          /*/# console.log(cart);*/
+          setRequestError(null);
+          // TODO create clean function to process cart exportable datas
+          sendWoocommerce(
+            cart.products.map((elem) => {
+              let temp = {
+                'productId': elem.productId,
+                'qty': elem.qty,
+                'price': elem.price
+              };
+              if(window.localStorage.getItem('variationIds')) {
+                if(JSON.parse(window.localStorage.getItem('variationIds'))[elem.productId]) {
+                  temp['variation'] = parseInt(JSON.parse(window.localStorage.getItem('variationIds'))[elem.productId], 10);
+                }
+              }
+              return temp;
+            }),
+            cart.totalProductsCount,
+            checkOutData.paymentMethod,
+            response.paymentIntent.status,
+            checkOutData.shipping,
+            checkOutData.billing
+          );
+          window.localStorage.removeItem('variationId');
+        }
+        else {
+          return;
+        }
+      } catch (err) {
+        /*/# console.log(err);*/
+      }
+    }
   };
 
   /*
@@ -129,6 +247,12 @@ const CheckoutForm = () => {
     } else {
       const newState = { ...input, [event.target.name]: event.target.value };
       setInput(newState);
+    }
+    if("stripe" === event.target.value) {
+      setStripeUsed(true);
+    }
+    else {
+      setStripeUsed(false);
     }
   };
 
@@ -157,12 +281,13 @@ const CheckoutForm = () => {
               <YourOrder cart={cart} />
 
               {/*Payment*/}
-              <PaymentModes input={input} handleOnChange={handleOnChange} />
+              <PaymentModes input={input} handleOnChange={handleOnChange} stripeUsed={stripeUsed} />
               <div className="woo-next-place-order-btn-wrap mt-5">
                 <button
                   className="woo-next-large-black-btn woo-next-place-order-btn btn btn-dark"
                   style={{ backgroundColor: '#fd7e35', color: '#fff', borderColor: '#fd7e35' }}
                   type="submit"
+                  disabled={stripeUsed && !stripe ? true : false}
                 >
                   Place Order
                 </button>
@@ -177,8 +302,6 @@ const CheckoutForm = () => {
       ) : (
         ""
       )}
-			{/*Pay with Stripe*/}
-			<StripePurchase/>
 
       {/*Show message if Order Success*/}
       <OrderSuccess response={checkoutResponse} />

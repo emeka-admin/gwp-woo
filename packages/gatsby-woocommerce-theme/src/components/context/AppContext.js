@@ -30,7 +30,7 @@ export const AppProvider = (props) => {
         // dues à de véritables bugs dans les composants.
         (error) => {
           setError(error);
-          console.log(error);
+          /*/# console.log(error);*/
         }
       );
     }

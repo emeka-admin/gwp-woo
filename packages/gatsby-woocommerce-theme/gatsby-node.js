@@ -11,9 +11,27 @@ exports.createPages = async ( { actions, graphql } ) => {
 };
 
 exports.onCreatePage = async ({ page, actions: { deletePage } }) => {
-    if (page.path.match(/\/((?!checkout).*?)((.html\/)|(.html)|\/)/g)) {
-      deletePage(page)
-    }
+	const pages = [
+		'checkout',
+	].join('|');
+
+	let regex = new RegExp('(/(?!' + pages + ').*?)((.html\/)|(.html)|/)');
+
+	let match = page.path.match(regex);
+
+	if(!match) {
+		/*/# console.log(`Create page : ${page.path}`);*/
+		return;
+	}
+	else {
+		if (match[0] === page.path) {
+			/*/# console.log(`Delete page : ${page.path}`);*/
+			deletePage(page)
+		}
+		else {
+			/*/# console.log(`Create page : ${page.path}`);*/
+		}
+	}
 }
 
 /**
