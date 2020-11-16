@@ -158,7 +158,8 @@ const CheckoutForm = () => {
           url: "https://idriss-stripe.emeka.fr/secret/",
           data: {
             amount: parseFloat(cart.totalProductsPrice.replace(/[^0-9,.]/g, '')) * 100,
-            currency: country.currency
+            // currency: country.currency
+            currency: 'eur'
           }
         });
 
