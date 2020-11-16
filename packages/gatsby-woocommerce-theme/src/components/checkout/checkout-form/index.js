@@ -159,7 +159,7 @@ const CheckoutForm = () => {
           data: {
             amount: parseFloat(cart.totalProductsPrice.replace(/[^0-9,.]/g, '')) * 100,
             // currency: country.currency
-            currency: 'eur'
+            currency: country.currency
           }
         });
 

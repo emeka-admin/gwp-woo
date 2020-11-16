@@ -19,7 +19,7 @@ export const AppProvider = (props) => {
 
   useEffect(() => {
     if(window.fetch) {
-      fetch("http://ip-api.com/json/?fields=country,city,timezone,currency")
+      fetch("https://idriss-stripe.emeka.fr/country/")
       .then(res => res.json())
       .then(
         (result) => {
