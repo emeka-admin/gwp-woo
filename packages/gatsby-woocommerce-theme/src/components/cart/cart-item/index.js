@@ -104,9 +104,9 @@ const CartItem = ( {
 					</div>
 					<div className="">
 						{/* <span className="cart-product-price">{ ( 'string' !== typeof item.price ) ? item.price.toFixed( 2 ) : item.price }</span> */}
-						<span className="cart-product-price">{ !country ? item.price : getLocalPrice(country, item.price) }</span>
+						<span className="cart-product-price">{ !country ? `${item.price} - ` : getLocalPrice(country, item.price) }</span>
 						{/* <span className="cart-total-price"> {( 'string' !== typeof item.totalPrice ) ? item.totalPrice.toFixed( 2 ) : item.totalPrice }</span> */}
-						<span className="cart-total-price"> { !country ? item.totalPrice : getLocalPrice(country, item.totalPrice) }</span>
+						<span className="cart-total-price"> { !country ? `${item.totalPrice} - ` : getLocalPrice(country, item.totalPrice) }</span>
 					</div>
 				</footer>
 			</div>

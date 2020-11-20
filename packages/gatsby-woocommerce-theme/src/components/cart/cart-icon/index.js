@@ -16,7 +16,7 @@ const CartIcon = () => {
 		<>
 			<button className="woo-menu-cart-icon" onClick={ () => setIsDropdownOpen( ! isDropdownOpen ) }>
 					<div className="woo-next-cart-wrap">
-						{ totalPrice ? <span className="woo-next-cart-price mr-2">{ !country ? totalPrice : getLocalPrice(country, totalPrice) }</span> : '' }
+						{ totalPrice ? <span className="woo-next-cart-price mr-2">{ !country ? `${totalPrice} - ` : getLocalPrice(country, totalPrice) }</span> : '' }
 						<span className="woo-next-cart-icon-container">
 							<span role="img" aria-label="cart-icon">🛒</span>
 							{ productsCount ? <span className="woo-next-cart-count">{ productsCount }</span> : '' }

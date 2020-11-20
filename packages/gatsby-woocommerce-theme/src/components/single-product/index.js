@@ -68,7 +68,7 @@ const SingleProduct = ( props ) => {
 								<p dangerouslySetInnerHTML={ { __html: sanitize( product.description ) } }/>
 							) : null }
 							<div className="single-product-add-to-cart">
-								<h6 className="card-subtitle mb-3">{ !country ? product.price : getLocalPrice(country, product.price) }</h6>
+								<h6 className="card-subtitle mb-3">{ !country ? `${product.price} - ` : getLocalPrice(country, product.price) }</h6>
 								<AddToCartButton product={ product }/>
 							</div>
 							<SocialShareCard title={ product.name } sectionTitle="Share this product"

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { graphql, useStaticQuery } from 'gatsby';
 import Billing from "../billing";
 import YourOrder from "../your-order";
 import PaymentModes from "../payment-mode";
@@ -14,13 +15,34 @@ import CheckoutError from "../checkout-error";
 import axios from "axios";
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import { sendWoocommerce } from "../../../utils/sendWoocommerce";
+import countryList from "../country-list";
+
+import './style.css';
 
 const CheckoutForm = () => {
+
+	const icons = useStaticQuery(graphql`
+		{
+			lock: file(relativePath : { eq: "lock.svg"}) {
+				publicURL
+      }
+      stripe: file(relativePath : { eq: "stripe/Stripe wordmark - blurple.svg"}) {
+        publicURL
+      }
+		}
+	`);
 
   const stripe = useStripe();
   const elements = useElements();
 
   const initialState = {
+    // TODO Transfer all cart in local storage
+    // TODO icon secured
+    // TODO icon visa /mastercard
+    // TODO button submit opacity 0.6  && disabled until valid
+    // TODO one item by cart
+    // TODO other address gestion (woocommerce man)
+    // BILLING ADDRESS
   	firstName: '',
   	lastName: '',
   	company: '',
@@ -31,12 +53,24 @@ const CheckoutForm = () => {
   	state: '',
   	postcode: '',
   	phone: '',
-  	email: '',
+    email: '',
+    // OTHER SHIPPING ADDRESS
+    otherAddress: false,
+    otherEmail: '',
+    otherFirstName: '',
+    otherLastName: '',
+    otherCompany: '',
+    otherAddress1: '',
+    otherAddress2: '',
+    otherPostcode: '',
+    otherCity: '',
+    otherCountry: '',
+    
   	createAccount: false,
   	username: '',
   	password: '',
   	customerNote: '',
-  	paymentMethod: '',
+  	paymentMethod: 'stripe',
   	errors: null
   };
 
@@ -68,7 +102,8 @@ const CheckoutForm = () => {
 
   /*/# console.log(cart);*/
 
-  const [stripeUsed, setStripeUsed] = useState(false);
+  // const [stripeUsed, setStripeUsed] = useState(false);
+  const [stripeUsed, setStripeUsed] = useState(true);
 
   // Get Cart Data.
   const { data, refetch } = useQuery(GET_CART, {
@@ -115,22 +150,18 @@ const CheckoutForm = () => {
    */
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    const result = validateAndSanitizeCheckoutForm(input);
+    console.log(result);
+    if (!result.isValid) {
+      setInput({ ...input, errors: result.errors });
+      return;
+    }
     if(!stripeUsed) {
-      const result = validateAndSanitizeCheckoutForm(input);
-      if (!result.isValid) {
-        setInput({ ...input, errors: result.errors });
-        return;
-      }
       const checkOutData = createCheckoutData(input);
       setOrderData(checkOutData);
       setRequestError(null);
     }
     else {
-      const result = validateAndSanitizeCheckoutForm(input);
-      if (!result.isValid) {
-        setInput({ ...input, errors: result.errors });
-        return;
-      }
 
       if (!stripe || !elements) {
         // Stripe.js has not yet loaded.
@@ -139,20 +170,23 @@ const CheckoutForm = () => {
       }
 
       const billingDetails = {
-        name: "Nom",
-        email: "agenceemeka@gmail.com",
+        name: [result.sanitizedData.firstName, result.sanitizedData.lastName].join(' '),
+        email: result.sanitizedData.email,
         address: {
-          city: 'marseille',
-          line1: '197 boulevard national',
-          state: 'France',
-          postal_code: '13003',
+          city: result.sanitizedData.city,
+          line1: result.sanitizedData.address1,
+          state: countryList.map(country => country.countryCode == result.sanitizedData.country ? country.countryCode : null).filter(elem => elem),
+          postal_code: result.sanitizedData.postcode,
         }
       };
+
+      console.log(billingDetails);
 
       const cardElement = elements.getElement(CardElement);
 
       try {
 
+        // TODO send an array or 2 payment requests
         const { data: clientSecret } = await axios({
           method: 'post',
           url: "https://idriss-stripe.emeka.fr/secret/",
@@ -168,7 +202,7 @@ const CheckoutForm = () => {
         const paymentMethodReq = await stripe.createPaymentMethod({
           type: "card",
           card: cardElement,
-          billing_details: billingDetails
+          // billing_details: billingDetails
         });
 
         if (paymentMethodReq.error) {
@@ -245,15 +279,17 @@ const CheckoutForm = () => {
     if ("createAccount" === event.target.name) {
       const newState = { ...input, [event.target.name]: !input.createAccount };
       setInput(newState);
-    } else {
-      const newState = { ...input, [event.target.name]: event.target.value };
+    }
+    else if ("otherAddress" === event.target.name) {
+      const newState = {...input, [event.target.name]: !input.otherAddress};
       setInput(newState);
     }
-    if("stripe" === event.target.value) {
+    else if("stripe" === event.target.value) {
       setStripeUsed(true);
     }
     else {
-      setStripeUsed(false);
+      const newState = {...input, [event.target.name]: event.target.value};
+      setInput(newState);
     }
   };
 
@@ -280,20 +316,14 @@ const CheckoutForm = () => {
               {/*	Order*/}
               <h2 className="mb-4">Your Order</h2>
               <YourOrder cart={cart} />
-
-              {/*Payment*/}
-              <PaymentModes input={input} handleOnChange={handleOnChange} stripeUsed={stripeUsed} />
-              <div className="woo-next-place-order-btn-wrap mt-5">
-                <button
-                  className="woo-next-large-black-btn woo-next-place-order-btn btn btn-dark"
-                  style={{ backgroundColor: '#fd7e35', color: '#fff', borderColor: '#fd7e35' }}
-                  type="submit"
-                  disabled={stripeUsed && !stripe ? true : false}
-                >
-                  Place Order
-                </button>
+              <div className="secured">
+                <img id="verify" src={icons.lock.publicURL} />
+                <span>Transaction secured over SSL</span>
               </div>
-
+              <div className="powered">
+                <span>Powered by </span>
+                <img id="secure" src={icons.stripe.publicURL} />
+              </div>
               {/* Checkout Loading*/}
               {checkoutLoading && <p>Processing Order...</p>}
               {requestError && <CheckoutError requestError={ requestError }/> }

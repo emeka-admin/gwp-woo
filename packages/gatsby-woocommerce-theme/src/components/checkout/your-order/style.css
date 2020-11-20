@@ -1,0 +1,96 @@
+.your-order {
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
+    border-radius: 7px;
+}
+
+.cart-products,
+.cart-total,
+.discount,
+.payment {
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+tbody.cart-total {
+
+}
+
+tbody.cart-total tr.subtotal {
+    font-weight: 400;
+    font-size: 15px;
+}
+
+tbody.cart-total tr.shipping {
+    font-weight: 500;
+    font-size: 15px;
+}
+
+tbody.cart-total tr.total {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+tbody.cart-total tr.subtotal :nth-child(1),
+tbody.cart-total tr.shipping :nth-child(1),
+tbody.cart-total tr.total :nth-child(1) {
+    
+}
+
+tbody.cart-total tr.subtotal :nth-child(2),
+tbody.cart-total tr.shipping :nth-child(2),
+tbody.cart-total tr.total :nth-child(2) {
+    
+}
+
+tbody.cart-total tr.shipping :nth-child(2) {
+    font-size: 14px;
+    font-weight: 400;
+    /* color: #c72c48; */
+    /* color: #db1702; */
+    color: #ed0000;
+}
+
+.payment {
+
+}
+
+.payment span.title {
+    display: block;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.payment label {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.payment label span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.payment label span,
+.payment label div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.purchase {
+    margin-top: 30px;
+    padding: 0 15px 15px;
+}
+
+.purchase button {
+    width: 100%;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    font-size: 18px;
+}
+
+.purchase button:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}

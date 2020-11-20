@@ -52,7 +52,7 @@ const WishlistProduct = (props) => {
 				</Link>
 				<div className="card-body text-center">
 					<h3 className="card-header">{product.name ? product.name : ""}</h3>
-					<h6 className="card-subtitle">{!country ? product.price : getLocalPrice(country, product.price)}</h6>
+					<h6 className="card-subtitle">{!country ? `${product.price} - ` : getLocalPrice(country, product.price)}</h6>
 					{ 'EXTERNAL' !== product.type ? <AddToCartButton product={product} /> : (
 						<div className="mb-5">
 							<a href={product.externalUrl} target="_blank" rel="noreferrer nofollow">

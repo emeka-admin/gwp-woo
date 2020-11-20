@@ -1,0 +1,34 @@
+.secured {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.secured img#verify {
+    display: inline-block;
+    vertical-align: middle;
+    height: 15px;
+    width: 15px;
+}
+
+.secured span {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 15px;;
+}
+
+.powered {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.powered img#secure {
+    display: inline-block;
+    vertical-align: middle;
+    height: 30px;
+}
+
+.powered span {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 15px;;
+}

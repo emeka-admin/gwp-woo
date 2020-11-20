@@ -1,0 +1,28 @@
+.billing-info,
+#other-address,
+.shipping-info {
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
+    padding: 15px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border-radius: 7px;
+    background-color: #fff;
+}
+
+#other-address {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#other-address > {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#other-address input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#other-address label {
+    margin: 0;
+}

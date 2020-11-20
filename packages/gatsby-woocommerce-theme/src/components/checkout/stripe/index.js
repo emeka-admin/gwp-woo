@@ -26,8 +26,10 @@ const CARD_ELEMENT_OPTIONS = {
 function CardSection() {
   return (
     <label>
-      Card details
-      <CardElement options={CARD_ELEMENT_OPTIONS} />
+      <span className="col-lg-4 col-md-3">Card details</span>
+      <div className="col-lg-8 col-md-9">
+        <CardElement options={CARD_ELEMENT_OPTIONS} />
+      </div>
     </label>
   );
 };

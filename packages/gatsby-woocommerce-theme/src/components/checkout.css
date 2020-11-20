@@ -1,0 +1,39 @@
+main.checkout {
+    padding: 30px;
+    box-sizing: border-box;
+    min-height: 100vh;
+    background-color: #fbfcfe;
+}
+
+main.checkout .head {
+    position: relative;
+}
+
+main.checkout .head h1 {
+    display: inline-block;
+}
+
+main.checkout .head .verified {
+    display: inline-block;
+    height: 44px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+@media (max-width: 539px) {
+    main.checkout .head {
+        margin-bottom: 20px;
+    }
+
+    main.checkout .head h1 {
+        margin-bottom: 0;
+    }
+
+    main.checkout .head .verified {
+        margin-top: 5px;
+        position: relative;
+        display: block;
+        height: 35px;
+    }
+}

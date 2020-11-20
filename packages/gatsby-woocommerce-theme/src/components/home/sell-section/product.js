@@ -193,9 +193,9 @@ const Product = ({ product }) => {
                             <span className="product-form__title">
                                 BUNDLE &amp; SAVE
                             </span>
-                            {has_variation && product.variations.nodes.map((variation, key) => 
-                                <div key={key} className="block-swatch-list">
-                                    <div className="block-swatch">
+                            <div className="block-swatch-list">
+                                {has_variation && product.variations.nodes.map((variation, key) => 
+                                    <div key={key} className="block-swatch">
                                         <input
                                             className="block-swatch__radio product-form__single-selector"
                                             type="radio"
@@ -216,8 +216,8 @@ const Product = ({ product }) => {
                                             </span>
                                         </label>
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                         <div className="product-form__info-list" data-visible-id="">
                             <div className="product-form__info-item variation-price">

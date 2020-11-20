@@ -31,7 +31,7 @@ const CartDropDown = ({ isDropdownOpen }) => {
 				</div>
 				<div className="shopping-cart-total">
 					<span className="lighter-text">Total:</span>
-					<span className="main-color-text">{ !country ? totalPrice : getLocalPrice(country, totalPrice) }</span>
+					<span className="main-color-text">{ !country ? `${totalPrice} - ` : getLocalPrice(country, totalPrice) }</span>
 				</div>
 			</div>
 			<ul className="shopping-cart-items">
@@ -59,7 +59,7 @@ const CartDropDown = ({ isDropdownOpen }) => {
 							</figure>
 						) : null}
 						<span className="item-name">{ product.name }</span>
-						<span className="item-price">{ !country ? product.totalPrice : getLocalPrice(country, product.totalPrice) }</span>
+						<span className="item-price">{ !country ? `${product.totalPrice} - ` : getLocalPrice(country, product.totalPrice) }</span>
 						<span className="item-quantity">Quantity: { product.qty }</span>
 					</li>
 				) ) }

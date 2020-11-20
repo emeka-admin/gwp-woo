@@ -1,19 +1,40 @@
 import React, { useContext } from "react";
 import CheckoutForm from "../components/checkout/checkout-form";
-import { AppContext } from "../components/context/AppContext";
+import { graphql, useStaticQuery } from 'gatsby';
 
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+
+import "../components/checkout.css";
 
 const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC}`);
 
 const Checkout = () => {
 
+  const img = useStaticQuery(graphql`
+    {
+      verified: file(relativePath: { eq: "verified.png"}) {
+        childImageSharp {
+          fluid {
+            srcWebp
+            srcSetWebp
+          }
+        }
+      }
+    }
+  `);
+
   return (
     <>
-      <main className="main-container">
-        <div className="container my-5">
-          <h1 className="mt-5 mb-4">Checkout Page.</h1>
+      <main className="checkout main-container">
+        <div className="container">
+          <div className="head">
+            <h1>
+              Checkout Page
+            </h1>
+            {/* <div className="verified" style={{backgroundImage: "url(" + img.verified.childImageSharp.fluid.srcWebp + ")"}}></div> */}
+            <img className="verified" src={img.verified.childImageSharp.fluid.srcWebp}/>
+          </div>
           <Elements stripe={stripePromise}>
             <CheckoutForm />
           </Elements>

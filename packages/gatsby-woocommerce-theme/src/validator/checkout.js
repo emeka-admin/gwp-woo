@@ -1,8 +1,9 @@
 import validator from 'validator';
 import { isEmpty } from 'lodash';
+import countryList from '../components/checkout/country-list';
 
 // @TODO to be revisited for updating for other countries.
-const postCodeLocale = "IN"
+const postCodeLocales = countryList.map(country => country.countryCode);
 
 
 const validateAndSanitizeCheckoutForm = ( data ) => {
@@ -18,7 +19,7 @@ const validateAndSanitizeCheckoutForm = ( data ) => {
 	 */
 	data.firstName = ( ! isEmpty( data.firstName ) ) ? data.firstName : '';
 	data.lastName = ( ! isEmpty( data.lastName ) ) ? data.lastName : '';
-	data.company = ( ! isEmpty( data.company ) ) ? data.company : '';
+	// data.company = ( ! isEmpty( data.company ) ) ? data.company : '';
 	data.country = ( ! isEmpty( data.country ) ) ? data.country : '';
 	data.address1 = ( ! isEmpty( data.address1 ) ) ? data.address1 : '';
 	data.address2 = ( ! isEmpty( data.address2 ) ) ? data.address2 : '';
@@ -28,7 +29,7 @@ const validateAndSanitizeCheckoutForm = ( data ) => {
 	data.phone = ( ! isEmpty( data.phone ) ) ? data.phone : '';
 	data.email = ( ! isEmpty( data.email ) ) ? data.email : '';
 	data.customerNote = ( ! isEmpty( data.customerNote ) ) ? data.customerNote : '';
-	data.paymentMethod = ( ! isEmpty( data.paymentMethod ) ) ? data.paymentMethod : '';
+	// data.paymentMethod = ( ! isEmpty( data.paymentMethod ) ) ? data.paymentMethod : '';
 
 	/**
 	 * Checks for error if required is true
@@ -42,8 +43,6 @@ const validateAndSanitizeCheckoutForm = ( data ) => {
 	 * @param {boolean} required Required if required is passed as false, it will not validate error and just do sanitization.
 	 */
 	const addErrorAndSanitizedData = ( fieldName, errorContent, min, max, type = '', required ) => {
-
-		const postCodeLocaleVal = postCodeLocale ? postCodeLocale : '';
 		/**
 		 * Please note that this isEmpty() belongs to validator and not our custom function defined above.
 		 *
@@ -57,11 +56,11 @@ const validateAndSanitizeCheckoutForm = ( data ) => {
 			errors[ fieldName ] = `${errorContent} is not valid`;
 		}
 
-		if ( 'phone' === type && ! validator.isMobilePhone( data[ fieldName ] ) ) {
-			errors[ fieldName ] = `${errorContent} is not valid`;
-		}
+		// if ( 'phone' === type && ! validator.isMobilePhone( data[ fieldName ] ) ) {
+		// 	errors[ fieldName ] = `${errorContent} is not valid`;
+		// }
 
-		if ( 'postcode' === type && postCodeLocaleVal && ! validator.isPostalCode( data[ fieldName ], postCodeLocaleVal ) ) {
+		if ( 'postcode' === type && postCodeLocales.indexOf(data[ fieldName ]) && ! validator.isPostalCode( data[ fieldName ], data.country ) ) {
 			errors[ fieldName ] = `${errorContent} is not valid`;
 		}
 
@@ -81,14 +80,14 @@ const validateAndSanitizeCheckoutForm = ( data ) => {
 
 	addErrorAndSanitizedData( 'firstName', 'First name', 2, 35, 'string', true );
 	addErrorAndSanitizedData( 'lastName', 'Last name', 2, 35, 'string', true );
-	addErrorAndSanitizedData( 'company', 'Company Name', 0, 35, 'string', false );
+	// addErrorAndSanitizedData( 'company', 'Company Name', 0, 35, 'string', false );
 	addErrorAndSanitizedData( 'country', 'Country name', 2, 55, 'string', true );
-	addErrorAndSanitizedData( 'address1', 'Street address line 1', 20, 100,'string',true );
+	addErrorAndSanitizedData( 'address1', 'Street address line 1', 0, 200,'string',true );
 	addErrorAndSanitizedData( 'address2', '', 0, 254, 'string', false );
 	addErrorAndSanitizedData( 'city', 'City field', 3, 25, 'string', true );
-	addErrorAndSanitizedData( 'state', 'State/County', 0, 254, 'string', true );
+	// addErrorAndSanitizedData( 'state', 'State/County', 0, 254, 'string', true );
 	addErrorAndSanitizedData( 'postcode', 'Post code', 2, 9, 'postcode', true );
-	addErrorAndSanitizedData( 'phone', 'Phone number', 10, 15, 'phone', true );
+	// addErrorAndSanitizedData( 'phone', 'Phone number', 10, 15, 'phone', true );
 	addErrorAndSanitizedData( 'email', 'Email', 11, 254, 'email', true );
 
 	// The data.createAccount is a boolean value.
@@ -101,7 +100,7 @@ const validateAndSanitizeCheckoutForm = ( data ) => {
 	}
 
 	addErrorAndSanitizedData( 'customerNote', '', 0, 254, 'string', false );
-	addErrorAndSanitizedData( 'paymentMethod', 'Payment mode field', 2, 50, 'string', true );
+	// addErrorAndSanitizedData( 'paymentMethod', 'Payment mode field', 2, 50, 'string', true );
 
 
 	return {

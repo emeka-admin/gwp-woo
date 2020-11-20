@@ -57,7 +57,7 @@ const Product = (props) => {
         </Link>
         <div className="card-body text-center">
           <h3 className="card-header">{product.name ? product.name : ""}</h3>
-          <h6 className="card-subtitle">{!country ? product.price : getLocalPrice(country, product.price)}</h6>
+          <h6 className="card-subtitle">{!country ? `${product.price} - ` : getLocalPrice(country, product.price)}</h6>
           <AddToCartButton product={product} />
           <AddToWishList product={ product } />
         </div>

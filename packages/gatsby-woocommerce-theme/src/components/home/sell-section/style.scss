@@ -236,10 +236,21 @@ div.sell-section {
 
             div.block-swatch-list {
               margin-top: 10px;
-              display: inline-block;
+              width: 100%;
+              box-sizing: border-box;
 
               div.block-swatch {
                 margin: 4px;
+                /* max-width: calc(50% - 8px); */
+                width: max-content;
+                box-sizing: border-box;
+                display: inline-block;
+                vertical-align: top;
+                min-width: calc(50% - 8px);
+
+                @media (max-width: 999px) {
+                  display: block;
+                }
 
                 input.block-swatch__radio.product-form__single-selector {
                   margin: 4px 0 0;
@@ -288,12 +299,12 @@ div.sell-section {
                   font-family: "Open Sans", helvetica, sans-serif;
                   font-size: 14px;
                   font-weight: 600;
-                  height: 37px;
                   line-height: 22.4px;
                   margin-bottom: 5px;
                   padding: 7px 14px;
                   text-align: center;
                   vertical-align: middle;
+                  width: 100%;
 
                   span.block-swatch__item-text {
                     box-sizing: border-box;

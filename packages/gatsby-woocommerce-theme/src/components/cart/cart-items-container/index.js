@@ -157,7 +157,7 @@ const CartItemsContainer = () => {
                         ? cart.totalProductsPrice.toFixed(2)
                         : cart.totalProductsPrice
                       } */}
-                      {!country ? cart.totalProductsPrice : getLocalPrice(country, cart.totalProductsPrice)}
+                      {!country ? `${cart.totalProductsPrice} - ` : getLocalPrice(country, cart.totalProductsPrice)}
                     </td>
                   </tr>
                   <tr className="table-light">
@@ -166,7 +166,7 @@ const CartItemsContainer = () => {
                       {/* {"string" !== typeof cart.totalProductsPrice
                         ? cart.totalProductsPrice.toFixed(2)
                       : cart.totalProductsPrice} */}
-                      {!country ? cart.totalProductsPrice : getLocalPrice(country, cart.totalProductsPrice)}
+                      {!country ? `${cart.totalProductsPrice} - ` : getLocalPrice(country, cart.totalProductsPrice)}
                     </td>
                   </tr>
                 </tbody>
