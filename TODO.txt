@@ -1,0 +1,29 @@
+PS : faire un outil back d'ajout de champs todo avec checkbox et texte barré
+Utile pour les petits cas comme ça, discussion client et les toutes petites tâches
+Et / ou dans Emetools
+
+Dans ce qui n'est pas encore présent, de notre côté :
+    - récupération des upsell
+    - feedback sur l'achat
+    - gestion de l'adresse de facturation différente
+    - gestion des coupons de réduction (calcul front et apply back)
+    - passer en localStorage (en parler si nécessaire, mais c'est comme sur merrylight.co, donc bon...)
+    - récupération d'une image pour en faire le logo de la page et de l'onglet
+    - 
+
+
+- un article par cart ou plusieurs articles ?
+- upsell en checkbox au checkout ou sur la page de payment success ?
+- payment success :
+    - redirection ?
+    - bandeau succes ?
+- payment error : (normalement pas puisque c'est un iframe de Stripe sauf si le gars a pas la thune)
+    - redirection ?
+    - bandeau d'erreur ?
+- payment canceled :
+    - retour à la page produit ?
+    - proposition d'upsell ?
+    - proposition de réduction ?
+    - proposition d'autre(s) produit(s) ?
+-
+-

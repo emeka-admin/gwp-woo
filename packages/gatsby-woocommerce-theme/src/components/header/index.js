@@ -18,6 +18,7 @@ import { Header2 } from "./header2";
  */
 export default ( props ) => {
 
+	// TODO add product image there as a thumbnail for the tab icon
 	return (
 		<StaticQuery
 			query={ graphql`
